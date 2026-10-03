@@ -33,6 +33,13 @@
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -45,7 +52,6 @@
             background-image: radial-gradient(rgba(42, 38, 80, 0.12) 1.5px, transparent 1.5px);
             background-size: 26px 26px;
             min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
         }
 
@@ -729,7 +735,11 @@
             font-size: 18px;
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 1024px) {
+            .floaters {
+                display: none;
+            }
+
             .hero {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -747,8 +757,16 @@
             }
 
             .mascot-stage {
-                max-width: 380px;
-                margin: 0 auto;
+                max-width: 320px;
+                margin: 55px auto 20px;
+            }
+
+            .bubble {
+                top: -15%;
+                right: 2%;
+                font-size: 18px;
+                padding: 10px 16px;
+                transform: rotate(1deg);
             }
 
             .steps {
@@ -901,7 +919,7 @@
 
             <div class="mascot-stage" aria-hidden="true">
                 <div class="mascot-blob"></div>
-                <div class="bubble">Orbit speed: 9 × 9 = ?</div>
+                <div class="bubble"><span style="position: relative; z-index: 2">Orbit speed: 9 × 9 = ?</span></div>
                 <svg class="mascot" viewBox="0 0 300 320">
                     <!-- Exhaust puff / shadow -->
                     <ellipse cx="150" cy="275" rx="55" ry="12" fill="#2A2650" opacity=".2" />
@@ -1010,7 +1028,8 @@
                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t2')}">
                 <div class="card-art" style="background:var(--pink)">
                     <div class="mult-art" style="font-size:28px">
-                        <span>34×7</span><span>81×6</span><span>29×3</span><span>54×8</span></div>
+                        <span>34×7</span><span>81×6</span><span>29×3</span><span>54×8</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">2-Digit × 1-Digit</div>
@@ -1031,7 +1050,8 @@
                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t3')}">
                 <div class="card-art" style="background:var(--yellow)">
                     <div class="mult-art" style="font-size:20px;letter-spacing:1px">
-                        <span>425×4</span><span>891×7</span><span>103×9</span><span>568×3</span></div>
+                        <span>425×4</span><span>891×7</span><span>103×9</span><span>568×3</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">3-Digit × 1-Digit</div>
@@ -1052,7 +1072,8 @@
                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t4')}">
                 <div class="card-art" style="background:var(--mint)">
                     <div class="mult-art" style="font-size:18px;letter-spacing:1px">
-                        <span>4812×5</span><span>2091×9</span><span>7534×2</span><span>1820×8</span></div>
+                        <span>4812×5</span><span>2091×9</span><span>7534×2</span><span>1820×8</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">4-Digit × 1-Digit</div>
@@ -1073,7 +1094,8 @@
                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t5')}">
                 <div class="card-art" style="background:var(--orange)">
                     <div class="mult-art" style="font-size:24px;letter-spacing:1px">
-                        <span>34×12</span><span>81×67</span><span>29×45</span><span>54×88</span></div>
+                        <span>34×12</span><span>81×67</span><span>29×45</span><span>54×88</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">2-Digit × 2-Digit</div>
@@ -1089,12 +1111,14 @@
                 </div>
             </div>
 
-            
+
             <div class="card active" tabindex="0" role="button" aria-label="Start Division Tables"
-                onclick="openModal('v0')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v0')}">
+                onclick="openModal('v0')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v0')}">
                 <div class="card-art" style="background:var(--sky)">
                     <div class="mult-art" style="font-size:24px;letter-spacing:1px;color:#2A2650">
-                        <span>12÷3</span><span>18÷6</span><span>24÷8</span><span>81÷9</span></div>
+                        <span>12÷3</span><span>18÷6</span><span>24÷8</span><span>81÷9</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">Division Tables</div>
@@ -1103,7 +1127,8 @@
                     <span class="btn btn-orange card-cta">
                         Let's go
                         <svg width="18" height="18" viewBox="0 0 20 20">
-                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </span>
                 </div>
@@ -1114,7 +1139,8 @@
                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v1')}">
                 <div class="card-art" style="background:var(--purple)">
                     <div class="mult-art" style="font-size:24px;letter-spacing:1px;color:#fff">
-                        <span>425÷5</span><span>819÷7</span><span>108÷9</span><span>568÷8</span></div>
+                        <span>425÷5</span><span>819÷7</span><span>108÷9</span><span>568÷8</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">3-Digit ÷ 1-Digit</div>
@@ -1129,12 +1155,14 @@
                     </span>
                 </div>
             </div>
-        
+
             <div class="card active" tabindex="0" role="button" aria-label="Start 4-Digit ÷ 1-Digit"
-                onclick="openModal('v2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v2')}">
+                onclick="openModal('v2')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v2')}">
                 <div class="card-art" style="background:var(--mint)">
                     <div class="mult-art" style="font-size:20px;letter-spacing:1px;color:#2A2650">
-                        <span>1266÷6</span><span>4851÷9</span><span>2832÷4</span></div>
+                        <span>1266÷6</span><span>4851÷9</span><span>2832÷4</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">4-Digit ÷ 1-Digit</div>
@@ -1143,17 +1171,20 @@
                     <span class="btn btn-orange card-cta">
                         Let's go
                         <svg width="18" height="18" viewBox="0 0 20 20">
-                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </span>
                 </div>
             </div>
 
             <div class="card active" tabindex="0" role="button" aria-label="Start 4-Digit ÷ 2-Digit"
-                onclick="openModal('v3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v3')}">
+                onclick="openModal('v3')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v3')}">
                 <div class="card-art" style="background:var(--pink)">
                     <div class="mult-art" style="font-size:20px;letter-spacing:1px;color:#2A2650">
-                        <span>4637÷46</span><span>8512÷23</span><span>9801÷99</span></div>
+                        <span>4637÷46</span><span>8512÷23</span><span>9801÷99</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">4-Digit ÷ 2-Digit</div>
@@ -1162,7 +1193,8 @@
                     <span class="btn btn-orange card-cta">
                         Let's go
                         <svg width="18" height="18" viewBox="0 0 20 20">
-                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </span>
                 </div>
