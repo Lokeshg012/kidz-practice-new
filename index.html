@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Masterclass | Kidz Brain Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF6E5;
+            --paper: #FFFFFF;
+            --ink: #2A2650;
+            --ink-soft: #5B577F;
+            --orange: #FF7A3D;
+            --yellow: #FFC93C;
+            --mint: #2EC4A6;
+            --sky: #4DA8FF;
+            --pink: #FF6B9D;
+            --purple: #7C5CFF;
+            --border: 3px solid var(--ink);
+            --shadow: 0 6px 0 var(--ink);
+            --radius: 26px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            color: var(--ink);
+            background-color: var(--cream);
+            background-image: radial-gradient(rgba(42, 38, 80, 0.12) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1,
+        h2,
+        h3,
+        .btn,
+        .tag {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* ─── FLOATING MATH SYMBOLS ─── */
+        .floaters {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floaters svg {
+            position: absolute;
+            animation: bob 6s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(var(--r, 0deg));
+            }
+
+            50% {
+                transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 6deg));
+            }
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .brand-logo {
+            width: 86px;
+            height: 86px;
+            flex-shrink: 0;
+            border-radius: 24px;
+            border: var(--border);
+            background: var(--paper);
+            box-shadow: 0 5px 0 var(--ink);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            padding: 5px;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
+            place-items: center;
+            background: var(--yellow);
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 26px;
+            color: var(--ink);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+
+        .brand-name {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--ink);
+        }
+
+        .brand-name .k {
+            color: var(--orange);
+        }
+
+        .brand-sub {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink-soft);
+            margin-top: 5px;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-pill {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            background: var(--paper);
+            border: var(--border);
+            border-radius: 999px;
+            padding: 8px 18px;
+            box-shadow: 0 4px 0 var(--ink);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+            padding: 30px 0 70px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--mint);
+            color: var(--ink);
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 7px 16px;
+            border: var(--border);
+            border-radius: 999px;
+            box-shadow: 0 3px 0 var(--ink);
+            margin-bottom: 22px;
+            transform: rotate(-2deg);
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 72px);
+            line-height: 1.02;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .hl {
+            position: relative;
+            display: inline-block;
+            color: var(--ink);
+            z-index: 0;
+        }
+
+        .hero h1 .hl::after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            right: -6px;
+            bottom: 4px;
+            height: 38%;
+            background: var(--yellow);
+            border-radius: 8px;
+            z-index: -1;
+            transform: rotate(-1.5deg);
+        }
+
+        .hero p {
+            font-size: 19px;
+            line-height: 1.55;
+            color: var(--ink-soft);
+            max-width: 480px;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .btn {
+            font-size: 19px;
+            font-weight: 600;
+            padding: 15px 30px;
+            border-radius: 18px;
+            border: var(--border);
+            cursor: pointer;
+            color: var(--ink);
+            box-shadow: var(--shadow);
+            transition: transform .12s ease, box-shadow .12s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 var(--ink);
+        }
+
+        .btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 var(--ink);
+        }
+
+        .btn-orange {
+            background: var(--orange);
+        }
+
+        .btn-white {
+            background: var(--paper);
+        }
+
+        .btn:focus-visible,
+        .card.active:focus-visible,
+        .input:focus-visible {
+            outline: 4px solid var(--sky);
+            outline-offset: 3px;
+        }
+
+        .perks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .perk {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: var(--ink);
+        }
+
+        .perk svg {
+            flex-shrink: 0;
+        }
+
+        /* mascot */
+        .mascot-stage {
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .mascot-blob {
+            position: absolute;
+            width: 92%;
+            aspect-ratio: 1;
+            background: var(--sky);
+            border: var(--border);
+            border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
+            box-shadow: var(--shadow);
+        }
+
+        .mascot {
+            position: relative;
+            width: 82%;
+            height: auto;
+        }
+
+        @keyframes hop {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .bubble {
+            position: absolute;
+            top: -12%;
+            right: -4%;
+            z-index: 10;
+            background: var(--paper);
+            border: var(--border);
+            border-radius: 20px;
+            padding: 12px 20px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            box-shadow: 0 4px 0 var(--ink);
+            transform: rotate(4deg);
+        }
+
+        .bubble::after {
+            content: '';
+            position: absolute;
+            left: 28px;
+            bottom: -15px;
+            width: 22px;
+            height: 22px;
+            background: var(--paper);
+            border-right: var(--border);
+            border-bottom: var(--border);
+            transform: rotate(55deg) skew(12deg, 12deg);
+            border-bottom-right-radius: 4px;
+        }
+
+        /* ─── SECTIONS ─── */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 28px;
+        }
+
+        .section-title .chip {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            border: var(--border);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 4px 0 var(--ink);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 70px;
+        }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: var(--paper);
+            border: var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .15s ease, box-shadow .15s ease;
+            position: relative;
+        }
+
+        .card-art {
+            height: 150px;
+            display: grid;
+            place-items: center;
+            border-bottom: var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 22px 24px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .card-desc {
+            font-size: 15px;
+            color: var(--ink-soft);
+            line-height: 1.5;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+            border: 2px solid var(--ink);
+            background: var(--cream);
+        }
+
+        .card-cta {
+            margin-top: auto;
+            align-self: flex-start;
+            font-size: 17px;
+            padding: 11px 22px;
+            border-radius: 14px;
+        }
+
+        .card.active {
+            cursor: pointer;
+        }
+
+        .card.active:hover {
+            transform: translateY(-6px) rotate(-0.6deg);
+            box-shadow: 0 12px 0 var(--ink);
+        }
+
+        .card.active:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 var(--ink);
+        }
+
+        .card.locked {
+            background: rgba(255, 255, 255, 0.55);
+            border-style: dashed;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .card.locked .card-art {
+            background: #E9E4F5;
+            border-bottom-style: dashed;
+        }
+
+        .card.locked .card-title,
+        .card.locked .card-desc {
+            opacity: .65;
+        }
+
+        .lock-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: var(--paper);
+            border: 2.5px solid var(--ink);
+            border-radius: 999px;
+            padding: 5px 12px 5px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* times table art */
+        .mult-art {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            transform: rotate(-4deg);
+            padding: 0 10px;
+        }
+
+        .mult-art span {
+            min-width: 46px;
+            min-height: 40px;
+            padding: 4px 8px;
+            border: 2.5px solid var(--ink);
+            border-radius: 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            background: var(--paper);
+            box-shadow: 2px 2px 0 var(--ink);
+            color: var(--ink);
+        }
+
+        .mult-art span:nth-child(3n+1) {
+            background: var(--yellow);
+        }
+
+        .mult-art span:nth-child(5n+2) {
+            background: var(--pink);
+        }
+
+        .mult-art span:nth-child(4n+3) {
+            background: var(--mint);
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .step {
+            background: var(--paper);
+            border: var(--border);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 5px 0 var(--ink);
+        }
+
+        .step-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: var(--border);
+            display: grid;
+            place-items: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .step h3 {
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .step p {
+            font-size: 15px;
+            color: var(--ink-soft);
+            line-height: 1.5;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 28px 24px 40px;
+            font-size: 14px;
+            color: var(--ink-soft);
+        }
+
+        /* ─── MODAL ─── */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(42, 38, 80, 0.6);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 500;
+        }
+
+        .overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--paper);
+            border: var(--border);
+            border-radius: 30px;
+            box-shadow: 0 10px 0 var(--ink);
+            width: 100%;
+            max-width: 460px;
+            padding: 0 30px 30px;
+            text-align: center;
+            position: relative;
+            animation: pop .28s cubic-bezier(.3, 1.5, .6, 1);
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.85) translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        .modal-top {
+            margin: 0 -30px 22px;
+            background: var(--yellow);
+            border-bottom: var(--border);
+            border-radius: 27px 27px 0 0;
+            padding: 26px 20px 20px;
+        }
+
+        .modal-top svg {
+            display: block;
+            margin: 0 auto 6px;
+        }
+
+        .modal h3 {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .modal p {
+            font-size: 15px;
+            color: var(--ink-soft);
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .field {
+            text-align: left;
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0 0 6px 4px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 14px 18px;
+            border: var(--border);
+            border-radius: 16px;
+            background: var(--cream);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            color: var(--ink);
+        }
+
+        .input::placeholder {
+            color: #A29EBF;
+            font-weight: 700;
+        }
+
+        .input.error {
+            border-color: #E5384F;
+            background: #FFE9EC;
+            animation: shake .3s;
+        }
+
+        @keyframes shake {
+            25% {
+                transform: translateX(-6px);
+            }
+
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        .err {
+            color: #D12C44;
+            font-size: 14px;
+            min-height: 20px;
+            margin: -2px 0 8px;
+            font-weight: 800;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 14px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 860px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 10px;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions,
+            .perks {
+                justify-content: center;
+            }
+
+            .mascot-stage {
+                max-width: 380px;
+                margin: 0 auto;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-pill {
+                display: none;
+            }
+
+            .brand {
+                gap: 12px;
+            }
+
+            .brand-logo {
+                width: 68px;
+                height: 68px;
+                border-radius: 20px;
+            }
+
+            .brand-name {
+                font-size: 22px;
+            }
+
+            .brand-sub {
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- floating symbols -->
+    <div class="floaters" aria-hidden="true">
+        <svg style="top:14%;left:4%;--r:-12deg;animation-delay:0s" width="54" height="54" viewBox="0 0 54 54">
+            <circle cx="27" cy="27" r="25" fill="#FF6B9D" stroke="#2A2650" stroke-width="3" />
+            <path d="M27 15v24M15 27h24" stroke="#2A2650" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <svg style="top:62%;left:2%;--r:10deg;animation-delay:1.2s" width="46" height="46" viewBox="0 0 46 46">
+            <path d="M23 3l5.5 12.5L42 17l-10 9 3 14-12-7-12 7 3-14-10-9 13.5-1.5z" fill="#FFC93C" stroke="#2A2650"
+                stroke-width="3" stroke-linejoin="round" />
+        </svg>
+        <svg style="top:10%;right:5%;--r:14deg;animation-delay:.6s" width="50" height="50" viewBox="0 0 50 50">
+            <rect x="3" y="3" width="44" height="44" rx="14" fill="#2EC4A6" stroke="#2A2650" stroke-width="3" />
+            <path d="M16 16l18 18M34 16L16 34" stroke="#2A2650" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <svg style="top:48%;right:2%;--r:-8deg;animation-delay:2s" width="52" height="52" viewBox="0 0 52 52">
+            <circle cx="26" cy="26" r="24" fill="#7C5CFF" stroke="#2A2650" stroke-width="3" />
+            <circle cx="26" cy="14" r="3.5" fill="#fff" />
+            <circle cx="26" cy="38" r="3.5" fill="#fff" />
+            <path d="M13 26h26" stroke="#fff" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <svg style="bottom:8%;right:8%;--r:6deg;animation-delay:1.6s" width="48" height="48" viewBox="0 0 48 48">
+            <rect x="3" y="3" width="42" height="42" rx="13" fill="#4DA8FF" stroke="#2A2650" stroke-width="3" />
+            <path d="M14 19h20M14 29h20" stroke="#fff" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <svg style="bottom:6%;left:9%;--r:-6deg;animation-delay:.3s" width="70" height="26" viewBox="0 0 70 26">
+            <path d="M3 13c8-14 14 14 22 0s14 14 22 0 14 14 20 0" fill="none" stroke="#FF7A3D" stroke-width="5"
+                stroke-linecap="round" />
+        </svg>
+    </div>
+
+    <div class="wrap">
+
+        <nav>
+            <div class="brand">
+                <div class="brand-logo">
+                    <img src="app.png" alt="Kidz Brain Academy logo"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
+                    <div class="brand-fallback">KBA</div>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name"><span class="k">Kidz</span> Brain Academy</span>
+                    <span class="brand-sub">Math Masterclass</span>
+                </div>
+            </div>
+            <div class="nav-pill">Practice. Play. Improve.</div>
+        </nav>
+
+        <!-- HERO -->
+        <header class="hero">
+            <div>
+                <div class="eyebrow">
+                    <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="#FFC93C" stroke="#2A2650" stroke-width="2"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Kidz Brain Academy presents
+                </div>
+                <h1>Make maths <span class="hl">super quick</span> with daily practice!</h1>
+                <p>Race the clock, beat your own score and become a times-table champion. A few minutes a day is all it
+                    takes.</p>
+                <div class="hero-actions">
+                    <a href="#modules" class="btn btn-orange">
+                        Pick a challenge
+                        <svg width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="perks">
+                    <div class="perk">
+                        <svg width="22" height="22" viewBox="0 0 22 22">
+                            <circle cx="11" cy="11" r="10" fill="#2EC4A6" stroke="#2A2650" stroke-width="2" />
+                            <path d="M6.5 11.5l3 3 6-6.5" fill="none" stroke="#2A2650" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Timed rounds
+                    </div>
+                    <div class="perk">
+                        <svg width="22" height="22" viewBox="0 0 22 22">
+                            <circle cx="11" cy="11" r="10" fill="#2EC4A6" stroke="#2A2650" stroke-width="2" />
+                            <path d="M6.5 11.5l3 3 6-6.5" fill="none" stroke="#2A2650" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Instant results
+                    </div>
+                    <div class="perk">
+                        <svg width="22" height="22" viewBox="0 0 22 22">
+                            <circle cx="11" cy="11" r="10" fill="#2EC4A6" stroke="#2A2650" stroke-width="2" />
+                            <path d="M6.5 11.5l3 3 6-6.5" fill="none" stroke="#2A2650" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Works on any device
+                    </div>
+                </div>
+            </div>
+
+            <div class="mascot-stage" aria-hidden="true">
+                <div class="mascot-blob"></div>
+                <div class="bubble">Orbit speed: 9 × 9 = ?</div>
+                <svg class="mascot" viewBox="0 0 300 320">
+                    <!-- Exhaust puff / shadow -->
+                    <ellipse cx="150" cy="275" rx="55" ry="12" fill="#2A2650" opacity=".2" />
+
+                    <!-- Fire -->
+                    <path d="M125 210 Q 150 310 175 210 Q 160 215 150 200 Q 140 215 125 210 Z" fill="#FFC93C"
+                        stroke="#2A2650" stroke-width="5" stroke-linejoin="round" />
+                    <path d="M135 210 Q 150 260 165 210 Q 155 213 150 205 Q 145 213 135 210 Z" fill="#FF7A3D" />
+
+                    <!-- Back center fin -->
+                    <path d="M140 180 L 150 240 L 160 180 Z" fill="#FF7A3D" stroke="#2A2650" stroke-width="5"
+                        stroke-linejoin="round" />
+
+                    <!-- Left fin -->
+                    <path d="M 100 150 L 50 230 L 105 200 Z" fill="#FF6B9D" stroke="#2A2650" stroke-width="5"
+                        stroke-linejoin="round" />
+
+                    <!-- Right fin -->
+                    <path d="M 200 150 L 250 230 L 195 200 Z" fill="#FF6B9D" stroke="#2A2650" stroke-width="5"
+                        stroke-linejoin="round" />
+
+                    <!-- Rocket body -->
+                    <path d="M 150 30 C 80 80 100 210 100 210 L 200 210 C 200 210 220 80 150 30 Z" fill="#fff"
+                        stroke="#2A2650" stroke-width="5" stroke-linejoin="round" />
+
+                    <!-- Nose cone -->
+                    <path d="M 150 30 C 129 45 116.5 63 108.5 82 C 135 92 165 92 191.5 82 C 183.5 63 171 45 150 30 Z"
+                        fill="#FF7A3D" stroke="#2A2650" stroke-width="5" stroke-linejoin="round" />
+
+                    <!-- Window -->
+                    <circle cx="150" cy="130" r="32" fill="#FFC93C" stroke="#2A2650" stroke-width="5" />
+                    <circle cx="150" cy="130" r="22" fill="#4DA8FF" stroke="#2A2650" stroke-width="5" />
+
+                    <!-- Window shine -->
+                    <path d="M 136 120 A 14 14 0 0 1 156 120" fill="none" stroke="#fff" stroke-width="5"
+                        stroke-linecap="round" />
+                    <circle cx="140" cy="135" r="3" fill="#fff" />
+
+                    <!-- Rocket body rivets -->
+                    <circle cx="150" cy="185" r="3" fill="#2A2650" opacity=".3" />
+                    <circle cx="150" cy="195" r="3" fill="#2A2650" opacity=".3" />
+
+                    <!-- Floating Math Symbols -->
+                    <g transform="translate(60, 60)" fill="none" stroke="#7C5CFF" stroke-width="7"
+                        stroke-linecap="round">
+                        <path d="M-9 0 L9 0 M0 -9 L0 9" />
+                    </g>
+                    <g transform="translate(240, 70)" fill="none" stroke="#2EC4A6" stroke-width="7"
+                        stroke-linecap="round">
+                        <path d="M-8 -8 L8 8 M-8 8 L8 -8" />
+                    </g>
+                    <g transform="translate(50, 180)" fill="none" stroke="#FFC93C" stroke-width="7"
+                        stroke-linecap="round">
+                        <path d="M-8 -8 L8 8 M-8 8 L8 -8" />
+                    </g>
+                    <g transform="translate(250, 180)" fill="none" stroke="#FF6B9D" stroke-width="7"
+                        stroke-linecap="round">
+                        <path d="M-9 0 L9 0 M0 -9 L0 9" />
+                    </g>
+
+                    <!-- Cute extra stars -->
+                    <circle cx="70" cy="120" r="4" fill="#2EC4A6" />
+                    <circle cx="220" cy="140" r="3" fill="#FFC93C" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- AVAILABLE -->
+        <h2 class="section-title" id="modules">
+            <span class="chip" style="background:var(--orange)">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="#FFC93C" stroke="#2A2650" stroke-width="2.4"
+                        stroke-linejoin="round" />
+                </svg>
+            </span>
+            Ready to play
+        </h2>
+
+
+        <div class="grid">
+            <div class="card active" tabindex="0" role="button" aria-label="Start Multiply Tables 2 to 9"
+                onclick="openModal('t1')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t1')}">
+                <div class="card-art" style="background:var(--sky)">
+                    <div class="mult-art">
+                        <span>2×3</span><span>4×5</span><span>6×7</span><span>8×9</span><span>3×3</span><span>5×6</span><span>7×8</span><span>9×9</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Multiply Tables</div>
+                    <div class="card-desc">Answer as many times-table questions as you can before the timer runs out.
+                    </div>
+                    <div class="tags"><span class="tag">Fundamentals</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card active" tabindex="0" role="button" aria-label="Start 2-Digit x 1-Digit"
+                onclick="openModal('t2')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t2')}">
+                <div class="card-art" style="background:var(--pink)">
+                    <div class="mult-art" style="font-size:28px">
+                        <span>34×7</span><span>81×6</span><span>29×3</span><span>54×8</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">2-Digit × 1-Digit</div>
+                    <div class="card-desc">Practice multiplying two-digit numbers by a single digit quickly.</div>
+                    <div class="tags"><span class="tag">Speed Training</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card active" tabindex="0" role="button" aria-label="Start 3-Digit x 1-Digit"
+                onclick="openModal('t3')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t3')}">
+                <div class="card-art" style="background:var(--yellow)">
+                    <div class="mult-art" style="font-size:20px;letter-spacing:1px">
+                        <span>425×4</span><span>891×7</span><span>103×9</span><span>568×3</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">3-Digit × 1-Digit</div>
+                    <div class="card-desc">Stretch your brain multiplying three-digit numbers.</div>
+                    <div class="tags"><span class="tag">Logic & Focus</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card active" tabindex="0" role="button" aria-label="Start 4-Digit x 1-Digit"
+                onclick="openModal('t4')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t4')}">
+                <div class="card-art" style="background:var(--mint)">
+                    <div class="mult-art" style="font-size:18px;letter-spacing:1px">
+                        <span>4812×5</span><span>2091×9</span><span>7534×2</span><span>1820×8</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">4-Digit × 1-Digit</div>
+                    <div class="card-desc">Four-digit monsters for absolute multiplication champions!</div>
+                    <div class="tags"><span class="tag">Mental Stamina</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card active" tabindex="0" role="button" aria-label="Start 2-Digit x 2-Digit"
+                onclick="openModal('t5')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('t5')}">
+                <div class="card-art" style="background:var(--orange)">
+                    <div class="mult-art" style="font-size:24px;letter-spacing:1px">
+                        <span>34×12</span><span>81×67</span><span>29×45</span><span>54×88</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">2-Digit × 2-Digit</div>
+                    <div class="card-desc">Step up and multiply two large digits together.</div>
+                    <div class="tags"><span class="tag">Complex Calculations</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            
+            <div class="card active" tabindex="0" role="button" aria-label="Start Division Tables"
+                onclick="openModal('v0')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v0')}">
+                <div class="card-art" style="background:var(--sky)">
+                    <div class="mult-art" style="font-size:24px;letter-spacing:1px;color:#2A2650">
+                        <span>12÷3</span><span>18÷6</span><span>24÷8</span><span>81÷9</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Division Tables</div>
+                    <div class="card-desc">The perfect warm-up. Quick table division chunks.</div>
+                    <div class="tags"><span class="tag">Quick Recall</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card active" tabindex="0" role="button" aria-label="Start 3-Digit ÷ 1-Digit"
+                onclick="openModal('v1')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v1')}">
+                <div class="card-art" style="background:var(--purple)">
+                    <div class="mult-art" style="font-size:24px;letter-spacing:1px;color:#fff">
+                        <span>425÷5</span><span>819÷7</span><span>108÷9</span><span>568÷8</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">3-Digit ÷ 1-Digit</div>
+                    <div class="card-desc">Solve these quick division problems right down to the quotient!</div>
+                    <div class="tags"><span class="tag">Core Skills</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        
+            <div class="card active" tabindex="0" role="button" aria-label="Start 4-Digit ÷ 1-Digit"
+                onclick="openModal('v2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v2')}">
+                <div class="card-art" style="background:var(--mint)">
+                    <div class="mult-art" style="font-size:20px;letter-spacing:1px;color:#2A2650">
+                        <span>1266÷6</span><span>4851÷9</span><span>2832÷4</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">4-Digit ÷ 1-Digit</div>
+                    <div class="card-desc">Advanced division. Divide four-digit numbers by a single digit.</div>
+                    <div class="tags"><span class="tag">Heavy Division</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card active" tabindex="0" role="button" aria-label="Start 4-Digit ÷ 2-Digit"
+                onclick="openModal('v3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('v3')}">
+                <div class="card-art" style="background:var(--pink)">
+                    <div class="mult-art" style="font-size:20px;letter-spacing:1px;color:#2A2650">
+                        <span>4637÷46</span><span>8512÷23</span><span>9801÷99</span></div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">4-Digit ÷ 2-Digit</div>
+                    <div class="card-desc">The ultimate test. Huge four-digit chunks divided by two-digits.</div>
+                    <div class="tags"><span class="tag">Expert Challenge</span><span class="tag">Timed</span></div>
+                    <span class="btn btn-orange card-cta">
+                        Let's go
+                        <svg width="18" height="18" viewBox="0 0 20 20">
+                            <path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <h2 class="section-title">
+            <span class="chip" style="background:var(--mint)">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2l2.8 6.4L22 9.3l-5.4 4.8 1.6 7L12 17.4 5.8 21.1l1.6-7L2 9.3l7.2-.9z" fill="#FFC93C"
+                        stroke="#2A2650" stroke-width="2.2" stroke-linejoin="round" />
+                </svg>
+            </span>
+            How it works
+        </h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num" style="background:var(--yellow)">1</div>
+                <h3>Pick a challenge</h3>
+                <p>Choose a practice module and enter your name and class.</p>
+            </div>
+            <div class="step">
+                <div class="step-num" style="background:var(--pink)">2</div>
+                <h3>Beat the timer</h3>
+                <p>Answer questions as fast and as accurately as you can.</p>
+            </div>
+            <div class="step">
+                <div class="step-num" style="background:var(--mint)">3</div>
+                <h3>See your score</h3>
+                <p>Check your result and try again to set a new personal best.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; Kidz Brain Academy &middot; Made for curious young mathematicians. Keep practising, you've got this!
+    </footer>
+
+    <!-- MODAL -->
+    <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-top">
+                <svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+                    <circle cx="37" cy="37" r="33" fill="#fff" stroke="#2A2650" stroke-width="4" />
+                    <path d="M37 10l6 13 14 1.5-10.5 9.5 3 14L37 40.5 24.5 48l3-14L17 24.5 31 23z" fill="#FF7A3D"
+                        stroke="#2A2650" stroke-width="3.5" stroke-linejoin="round"
+                        transform="translate(0 6) scale(1 .92)" />
+                </svg>
+                <h3 id="modalTitle">Who's playing?</h3>
+            </div>
+            <p>Tell us your name and class, then press start. The timer begins on the next page!</p>
+
+            <div class="field">
+                <label for="studentName">Your name</label>
+                <input type="text" id="studentName" class="input" placeholder="e.g. Aarav" autocomplete="off">
+            </div>
+            <div class="field">
+                <label for="studentBranch">Branch / Class</label>
+                <input type="text" id="studentBranch" class="input" placeholder="e.g. Class 4 - A" autocomplete="off">
+            </div>
+            <div class="err" id="err" role="alert"></div>
+
+            <div class="modal-actions">
+                <button class="btn btn-white" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-orange" onclick="startLevel()">Start!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingLevel = null;
+        const overlay = document.getElementById('overlay');
+        const nameEl = document.getElementById('studentName');
+        const branchEl = document.getElementById('studentBranch');
+        const errEl = document.getElementById('err');
+
+        function openModal(level) {
+            pendingLevel = level;
+            overlay.classList.add('open');
+            setTimeout(() => nameEl.focus(), 100);
+        }
+
+        function closeModal() {
+            overlay.classList.remove('open');
+            nameEl.value = '';
+            branchEl.value = '';
+            errEl.textContent = '';
+            nameEl.classList.remove('error');
+            branchEl.classList.remove('error');
+        }
+
+        function startLevel() {
+            const name = nameEl.value.trim();
+            const branch = branchEl.value.trim();
+
+            nameEl.classList.toggle('error', !name);
+            branchEl.classList.toggle('error', !branch);
+
+            if (!name || !branch) {
+                errEl.textContent = 'Please fill in both your name and class to begin.';
+                (!name ? nameEl : branchEl).focus();
+                return;
+            }
+
+            closeModal();
+            sessionStorage.clear(); // Ensure clean session state
+
+            sessionStorage.setItem("selectedLevel", pendingLevel);
+            sessionStorage.setItem("studentName", name);
+            sessionStorage.setItem("studentBranch", branch);
+
+            window.location.href = "level" + pendingLevel + ".html";
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!overlay.classList.contains('open')) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Enter') startLevel();
+        });
+
+        [nameEl, branchEl].forEach(el => el.addEventListener('input', () => {
+            el.classList.remove('error');
+            errEl.textContent = '';
+        }));
+    </script>
+</body>
+
+</html>
