@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3x1 Multiplication - Kidz Brain Academy</title>
+    <link rel="icon" type="image/png" href="app.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
         rel="stylesheet">
@@ -677,28 +678,28 @@
             return 'var(--pop-red)';
         };
 
-        
+
         function buildSmartOptions(a, b, correct) {
             const opts = new Set([correct]);
             opts.add(a * (b + 1));
             if (b > 2) opts.add(a * (b - 1));
             opts.add((a + 1) * b);
             if (a > 2) opts.add((a - 1) * b);
-            
+
             opts.add(correct + 10);
             opts.add(correct - 10);
             opts.add(correct + 100);
             if (correct > 100) opts.add(correct - 100);
-            
+
             let arr = Array.from(opts).filter(x => x > 0 && x !== correct);
             arr = arr.sort(() => Math.random() - 0.5);
-            
+
             const finalOpts = [correct];
             for (let val of arr) {
                 if (finalOpts.length >= 4) break;
                 if (!finalOpts.includes(val)) finalOpts.push(val);
             }
-            
+
             while (finalOpts.length < 4) {
                 let r = correct + (Math.random() < 0.5 ? 1 : -1) * rand(1, b > 10 ? 50 : 15);
                 if (r > 0 && !finalOpts.includes(r)) finalOpts.push(r);

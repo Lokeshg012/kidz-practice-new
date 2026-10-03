@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boss Division - Kidz Brain Academy</title>
+    <link rel="icon" type="image/png" href="app.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
         rel="stylesheet">
@@ -677,22 +678,22 @@
             return 'var(--pop-red)';
         };
 
-        
+
         function buildSmartOptions(a, b, correct) {
-            const opts = new Set([correct, correct+1, correct-1, correct+10]);
-            if (correct > 10) opts.add(correct-10);
+            const opts = new Set([correct, correct + 1, correct - 1, correct + 10]);
+            if (correct > 10) opts.add(correct - 10);
             let arr = Array.from(opts).filter(x => x > 0 && x !== correct).sort(() => Math.random() - 0.5);
             const finalOpts = [correct];
             for (let val of arr) { if (finalOpts.length >= 4) break; finalOpts.push(val); }
-            while(finalOpts.length < 4) finalOpts.push(correct + (Math.random() < 0.5 ? 1 : -1) * rand(1, correct > 10 ? 20 : 5));
+            while (finalOpts.length < 4) finalOpts.push(correct + (Math.random() < 0.5 ? 1 : -1) * rand(1, correct > 10 ? 20 : 5));
             return finalOpts.sort(() => Math.random() - 0.5);
         }
 
         function makeQuestion() {
             const b = rand(11, 99);
-            let quotient = rand(11, 909); 
-            let a = b * quotient; 
-            while(a < 1000 || a > 9999) {
+            let quotient = rand(11, 909);
+            let a = b * quotient;
+            while (a < 1000 || a > 9999) {
                 quotient = rand(11, 909);
                 a = b * quotient;
             }
