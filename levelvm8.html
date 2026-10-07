@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-Digit × 9999 - Kidz Brain Academy</title>
+    <link rel="icon" type="image/png" href="app.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        if (!sessionStorage.getItem("studentName") || !sessionStorage.getItem("studentBranch")) {
+            window.location.href = "index.html";
+        }
+    </script>
+    <link rel="stylesheet" href="level.css">
+</head>
+<body>
+<header>
+        <div class="hdr-left">
+            <button class="back-btn" onclick="confirmBack()" aria-label="Go back">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5" />
+                    <path d="m12 19-7-7 7-7" />
+                </svg>
+            </button>
+            <div class="hdr-logo">
+                <img src="app.png" alt="Kidz Brain Academy logo"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='grid'">
+                <div class="fallback">KBA</div>
+            </div>
+            <div class="hdr-title">
+                <b><span class="k">Kidz</span> Brain Academy</b>
+                <span>Tables Module</span>
+            </div>
+        </div>
+        <div class="hdr-right">
+            <div class="timer" id="timerBox">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A2650" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="13" r="8"></circle>
+                    <path d="M12 9v4l2.5 2"></path>
+                    <path d="M9 2h6"></path>
+                </svg>
+                <b id="timer">1:00</b>
+            </div>
+            <div class="counter"><span id="attempted">0</span> <small>/ 50</small></div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="intro">
+            <div>
+                <p class="greet" id="greet"></p>
+                <h1>3-Digit × 9999</h1>
+            </div>
+            <div class="progress-card">
+                <div class="progress-row"><span>Your progress</span><b id="progressText">0 of 50 answered</b></div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="tabs-wrap">
+            <div class="tabs" id="pagination" role="tablist" aria-label="Question sets"></div>
+        </div>
+
+        <div class="q-grid" id="questions"></div>
+
+        <div class="actions">
+            <button class="btn btn-white" id="prevBtn" onclick="goPage(currentPage - 1)" hidden>
+                <svg width="18" height="18" viewBox="0 0 20 20"><path d="M16 10H5M10 4l-6 6 6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Previous set
+            </button>
+            <button class="btn btn-blue" id="nextBtn" onclick="goPage(currentPage + 1)" hidden>
+                Next set
+                <svg width="18" height="18" viewBox="0 0 20 20"><path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="btn btn-mint" onclick="handleSubmission()">
+                <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" fill="none" stroke="#2A2650" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Finish Assessment
+            </button>
+        </div>
+    </main>
+
+    <!-- Back Warning -->
+    <div class="overlay" id="backWarn">
+        <div class="dialog warn-dialog" role="dialog" aria-modal="true" aria-labelledby="warnTitle">
+            <div class="warn-icon">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2A2650" stroke-width="2.6"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+            </div>
+            <h3 id="warnTitle">Leave this module?</h3>
+            <p>Your current progress will not be saved if you leave now.</p>
+            <div class="warn-actions">
+                <button class="btn btn-white" onclick="closeBackWarn()">Stay</button>
+                <button class="btn btn-pink" onclick="goBack()">Leave</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="overlay" id="resultModal">
+        <div class="dialog result-dialog" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+            <div class="result-top">
+                <svg width="62" height="62" viewBox="0 0 64 64" aria-hidden="true">
+                    <path d="M18 8h28v16a14 14 0 0 1-28 0z" fill="#fff" stroke="#2A2650" stroke-width="3.5" stroke-linejoin="round"/>
+                    <path d="M18 12H8c0 11 5 16 12 17M46 12h10c0 11-5 16-12 17" fill="none" stroke="#2A2650" stroke-width="3.5" stroke-linecap="round"/>
+                    <path d="M32 38v9" stroke="#2A2650" stroke-width="4" stroke-linecap="round"/>
+                    <rect x="21" y="47" width="22" height="9" rx="3" fill="#FF7A3D" stroke="#2A2650" stroke-width="3.5"/>
+                    <path d="M32 14l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.9 2.7 1.1-5.3-4-3.7 5.4-.6z" fill="#FFC93C" stroke="#2A2650" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                <h2 id="resTitle">Assessment Complete</h2>
+            </div>
+
+            <div class="student-info">
+                <div class="si"><span>Name</span><strong id="resName"></strong></div>
+                <div class="si"><span>Class</span><strong id="resBranch"></strong></div>
+                <div class="si-time" id="resTime"></div>
+            </div>
+
+            <div class="ring" id="ring">
+                <div class="ring-inner">
+                    <span class="score-big" id="scoreNum">0</span>
+                    <span class="score-total">out of 50</span>
+                </div>
+            </div>
+            <div class="score-pct" id="scorePct">0% Mastery</div>
+            <p class="score-msg" id="scoreMsg"></p>
+
+            <div class="result-stats">
+                <div class="rs-item">
+                    <div class="rs-val" id="rsCorrect" style="color:#1E9C83">0</div>
+                    <div class="rs-lbl">Correct</div>
+                </div>
+                <div class="rs-item">
+                    <div class="rs-val" id="rsWrong" style="color:#E0457F">0</div>
+                    <div class="rs-lbl">Incorrect</div>
+                </div>
+                <div class="rs-item">
+                    <div class="rs-val" id="rsSkipped" style="color:#E8601F">0</div>
+                    <div class="rs-lbl">Skipped</div>
+                </div>
+            </div>
+
+            <div class="result-footer">
+                <button class="btn btn-blue" onclick="goBack()">Return to Dashboard</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const PREFIX = 'vm8';
+        const TOTAL = 50;
+        const PER_PAGE = 25;
+        const PAGES = TOTAL / PER_PAGE;
+        const CARD_COLORS = ['#FFE08A', '#FFB3CF', '#A9D8FF', '#CDBFFF'];
+
+        let questions = JSON.parse(sessionStorage.getItem(PREFIX + '_questions')) || [];
+        let answers = JSON.parse(sessionStorage.getItem(PREFIX + '_answers')) || {};
+        let timeLeft = parseInt(sessionStorage.getItem(PREFIX + '_time')) || 60; // 60s logic
+        let currentPage = 1;
+        let timerInterval;
+
+        const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+
+        /* ── Grade Colors ── */
+        const getGradeColor = pct => {
+            if (pct >= 90) return 'var(--mint)';
+            if (pct >= 70) return 'var(--sky)';
+            if (pct >= 50) return 'var(--orange)';
+            return 'var(--pink)';
+        };
+
+        const getGradeMessage = pct => {
+            if (pct >= 90) return 'Outstanding! You are a times-table champion.';
+            if (pct >= 70) return 'Great job! Keep practising to reach the top.';
+            if (pct >= 50) return 'Good effort! A little more practice and you will fly.';
+            return 'Nice try! Practise a bit more and you will improve fast.';
+        };
+
+        /* ── Advanced Vedic Distractors ── */
+        function buildSmartOptions(correct) {
+            const opts = new Set([correct]);
+            const str = correct.toString();
+            const len = str.length;
+            opts.add(correct + 1);
+            opts.add(correct - 1);
+            if (correct > 10) opts.add(correct + 10);
+            if (correct > 10) opts.add(correct - 10);
+            if (correct > 100) opts.add(correct + 100);
+            if (correct > 100) opts.add(correct - 100);
+            opts.add(correct + 10);
+            if (correct > 10) opts.add(correct - 10);
+            if (len >= 2) {
+                let arr = str.split('');
+                let tmp = arr[len - 1]; arr[len - 1] = arr[len - 2]; arr[len - 2] = tmp;
+                let v = parseInt(arr.join(''));
+                if (v !== correct && v > 0) opts.add(v);
+            }
+            if (len >= 3) {
+                let arr = str.split('');
+                let tmp = arr[len - 2]; arr[len - 2] = arr[len - 3]; arr[len - 3] = tmp;
+                let v = parseInt(arr.join(''));
+                if (v !== correct && v > 0) opts.add(v);
+            }
+            let arr = Array.from(opts).filter(x => x > 0 && x !== correct).sort(() => Math.random() - 0.5);
+            const finalOpts = [correct];
+            for (let val of arr) {
+                if (finalOpts.length >= 4) break;
+                if (!finalOpts.includes(val)) finalOpts.push(val);
+            }
+            while (finalOpts.length < 4) {
+                let r = correct + (Math.random() < 0.5 ? 1 : -1) * (Math.floor(Math.random() * 8) + 1);
+                if (r > 0 && !finalOpts.includes(r)) finalOpts.push(r);
+            }
+            return finalOpts.sort(() => Math.random() - 0.5);
+        }
+
+function makeQuestion() {
+    const a = rand(100, 999);
+    const correct = a * 9999;
+    const text = a + ' × 9999';
+    return { text: text, options: buildSmartOptions(correct), correct: correct, type: 'vm' };
+}
+
+        function generateQuestions() {
+            if (questions.length >= TOTAL) return;
+            const pool = [];
+            for (let i = 0; i < TOTAL; i++) {
+                pool.push(makeQuestion());
+            }
+            questions = pool;
+            sessionStorage.setItem(PREFIX + '_questions', JSON.stringify(questions));
+        }
+
+        /* ── Render ── */
+function renderPage(page) {
+            currentPage = page;
+            const start = (page - 1) * PER_PAGE;
+
+            document.getElementById('questions').innerHTML = questions.slice(start, start + PER_PAGE).map((q, i) => {
+                const idx = start + i;
+                let text = String(q.text);
+                let expr = `<span>${text}</span>`;
+                if (text.includes(' × ')) {
+                    const parts = text.split(' × ');
+                    expr = `<span>${parts[0]}</span><span class="op">×</span><span>${parts[1]}</span>`;
+                } else if (text.includes(' ÷ ')) {
+                    const parts = text.split(' ÷ ');
+                    expr = `<span>${parts[0]}</span><span class="op">÷</span><span>${parts[1]}</span>`;
+                } else if (text.includes('²')) {
+                    const base = text.replace('²', '');
+                    expr = `<span>${base}</span><sup style="color:var(--orange); font-size: 0.58em; margin-left: 0px; vertical-align: baseline; position: relative; top: -0.65em; line-height: 0;">2</sup>`;
+                } else if (text.includes('√')) {
+                    const root = text.replace('√', '');
+                    expr = `<span class="op" style="margin-right:6px; font-family: sans-serif;">√</span><span>${root}</span>`;
+                } else if (text.includes('∛')) {
+                    const root = text.replace('∛', '');
+                    expr = `<span class="op" style="margin-right:6px; font-family: sans-serif;">∛</span><span>${root}</span>`;
+                }
+                const answered = answers[idx] != null;
+
+                return `
+                <article class="q-card${answered ? ' answered' : ''}" data-idx="${idx}" style="--c:${CARD_COLORS[idx % CARD_COLORS.length]}">
+                    <div class="q-head">
+                        <div class="q-num">${idx + 1}</div>
+                        <div class="q-expr">${expr}<span class="eq">=</span><span class="qm">?</span></div>
+                    </div>
+                    <span class="q-check" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9" fill="none" stroke="#2A2650" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <div class="opts" role="group" aria-label="Answers for question ${idx + 1}">
+                        ${q.options.map(o => `
+                            <button class="opt${answers[idx] === o ? ' selected' : ''}" data-val="${o}"
+                                    aria-pressed="${answers[idx] === o}">${o}</button>
+                        `).join('')}
+                    </div>
+                </article>`;
+            }).join('');
+
+            renderPagination();
+            updateStats();
+            updateNav();
+        }
+
+        function renderPagination() {
+            const nav = document.getElementById('pagination');
+            nav.innerHTML = '';
+            for (let i = 1; i <= PAGES; i++) {
+                const s = (i - 1) * PER_PAGE;
+                let done = 0;
+                for (let j = s; j < s + PER_PAGE; j++) if (answers[j] != null) done++;
+
+                const btn = document.createElement('button');
+                btn.className = `tab${i === currentPage ? ' active' : ''}`;
+                btn.setAttribute('role', 'tab');
+                btn.setAttribute('aria-selected', i === currentPage);
+                btn.innerHTML = `Set ${i}<small>Q${s + 1}–${s + PER_PAGE} · ${done}/${PER_PAGE}</small>`;
+                btn.onclick = () => goPage(i);
+                nav.appendChild(btn);
+            }
+        }
+
+        function updateNav() {
+            document.getElementById('prevBtn').hidden = currentPage <= 1;
+            document.getElementById('nextBtn').hidden = currentPage >= PAGES;
+        }
+
+        function goPage(page) {
+            if (page < 1 || page > PAGES) return;
+            renderPage(page);
+            scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('questions').addEventListener('click', e => {
+            const btn = e.target.closest('.opt');
+            if (!btn) return;
+            const card = btn.closest('.q-card');
+            pick(parseInt(card.dataset.idx, 10), parseInt(btn.dataset.val, 10));
+        });
+
+        function pick(idx, val) {
+            answers[idx] = val;
+            sessionStorage.setItem(PREFIX + '_answers', JSON.stringify(answers));
+
+            const card = document.querySelector(`.q-card[data-idx="${idx}"]`);
+            if (card) {
+                card.classList.add('answered');
+                card.querySelectorAll('.opt').forEach(b => {
+                    const on = parseInt(b.dataset.val, 10) === val;
+                    b.classList.toggle('selected', on);
+                    b.setAttribute('aria-pressed', on);
+                });
+            }
+            renderPagination();
+            updateStats();
+        }
+
+        function updateStats() {
+            const n = Object.keys(answers).length;
+            document.getElementById('attempted').textContent = n;
+            document.getElementById('progressText').textContent = `${n} of ${TOTAL} answered`;
+            document.getElementById('progressBar').style.width = (n / TOTAL * 100) + '%';
+        }
+
+        /* ── Timer ── */
+        function renderTimer() {
+            const t = Math.max(0, Math.floor(timeLeft));
+            const m = Math.floor(t / 60);
+            const s = t % 60;
+            document.getElementById('timer').textContent = `${m}:${s < 10 ? '0' + s : s}`;
+            document.getElementById('timerBox').classList.toggle('urgent', t <= 10);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                sessionStorage.setItem(PREFIX + '_time', timeLeft);
+                renderTimer();
+                if (timeLeft <= 0) handleSubmission();
+            }, 1000);
+        }
+
+        /* ── Submit ── */
+        function handleSubmission() {
+            clearInterval(timerInterval);
+
+            let correct = 0;
+            questions.forEach((q, i) => { if (answers[i] === q.correct) correct++; });
+
+            const attempted = Object.keys(answers).length;
+            const wrong = attempted - correct;
+            const skipped = TOTAL - attempted;
+            const pct = Math.round((correct / TOTAL) * 100);
+
+            document.getElementById('scoreNum').textContent = correct;
+            document.getElementById('scorePct').textContent = pct + '% Mastery';
+            document.getElementById('scoreMsg').textContent = getGradeMessage(pct);
+
+            const ring = document.getElementById('ring');
+            ring.style.setProperty('--col', getGradeColor(pct));
+            ring.style.setProperty('--p', pct);
+
+            document.getElementById('rsCorrect').textContent = correct;
+            document.getElementById('rsWrong').textContent = wrong;
+            document.getElementById('rsSkipped').textContent = skipped;
+
+            const sName = sessionStorage.getItem("studentName") || "Student";
+            const sBranch = sessionStorage.getItem("studentBranch") || "Branch";
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true }).toUpperCase();
+
+            document.getElementById('resName').textContent = sName;
+            document.getElementById('resBranch').textContent = sBranch;
+            document.getElementById('resTime').textContent = `Submitted: ${dateStr} at ${timeStr} IST`;
+
+            // Wipe user details immediately so if they close the modal/refresh, they cannot retry
+            sessionStorage.removeItem("studentName");
+            sessionStorage.removeItem("studentBranch");
+            sessionStorage.removeItem(PREFIX + '_questions');
+            sessionStorage.removeItem(PREFIX + '_answers');
+            sessionStorage.removeItem(PREFIX + '_time');
+
+            document.getElementById('resultModal').classList.add('open');
+        }
+
+        /* ── Navigation ── */
+        function confirmBack() { document.getElementById('backWarn').classList.add('open'); }
+        function closeBackWarn() { document.getElementById('backWarn').classList.remove('open'); }
+        function goBack() {
+            sessionStorage.clear();
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeBackWarn();
+        });
+
+        /* ── Init ── */
+        generateQuestions();
+        const studentName = sessionStorage.getItem('studentName');
+        if (studentName) document.getElementById('greet').textContent = `Good luck, ${studentName}!`;
+        renderTimer();
+        renderPage(1);
+        startTimer();
+    </script>
+</body>
+</html>
